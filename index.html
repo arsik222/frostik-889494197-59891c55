@@ -32,7 +32,6 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-        /* Шапка */
         .header {
             display: flex;
             justify-content: space-between;
@@ -52,12 +51,11 @@
             gap: 5px;
         }
 
-        /* Видео блок */
+        /* Контейнер для видео */
         .video-box {
             position: relative;
             width: 100%;
             aspect-ratio: 9/12;
-            background: linear-gradient(45deg, #4d3a33, #8a6b5d);
             border-radius: 16px;
             overflow: hidden;
             display: flex;
@@ -66,14 +64,29 @@
             cursor: pointer;
         }
 
+        /* Задний фон с эффектом размытия (блюра) */
+        .video-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('image_a705c1.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(12px); /* Сила размытия картинки */
+            transform: scale(1.1); /* Убирает белые края от размытия */
+            z-index: 1;
+        }
+
         .online-count {
             position: absolute;
             top: 15px;
             left: 15px;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
             padding: 4px 8px;
             border-radius: 8px;
             font-size: 12px;
+            z-index: 2;
         }
 
         .age-limit {
@@ -85,6 +98,7 @@
             border-radius: 6px;
             font-weight: bold;
             font-size: 12px;
+            z-index: 2;
         }
 
         .play-button {
@@ -97,6 +111,7 @@
             justify-content: center;
             align-items: center;
             border: 2px solid rgba(255,255,255,0.3);
+            z-index: 2;
         }
 
         .play-icon {
@@ -107,7 +122,6 @@
             margin-left: 5px;
         }
 
-        /* Прогресс-бар */
         .progress-container {
             width: 100%;
             margin-top: 15px;
@@ -132,21 +146,22 @@
             margin-top: 8px;
         }
 
-        /* Инфо и кнопка */
         .user-info {
             display: flex;
             align-items: center;
             gap: 12px;
             margin: 20px 0;
         }
+        
+        /* Круглая аватарка пользователя */
         .avatar {
-            width: 40px; height: 40px;
-            background: var(--accent-red);
+            width: 42px; 
+            height: 42px;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
+            border: 2px solid var(--accent-red);
+            background: url('image_a705c1.jpg');
+            background-size: cover;
+            background-position: center;
         }
 
         .main-btn {
@@ -175,7 +190,6 @@
         .stat-item div:first-child { font-weight: bold; }
         .stat-item div:last-child { color: var(--text-secondary); font-size: 11px; }
 
-        /* --- МОДАЛЬНОЕ ОКНО --- */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -209,14 +223,13 @@
             border-radius: 12px;
             font-weight: bold;
         }
-
     </style>
 </head>
 <body>
 
 <div class="player-container">
     <div class="header">
-        <div class="logo">Private Hub</div>
+        <div class="logo">WexVideo</div>
         <div class="live-indicator">● LIVE</div>
     </div>
 
@@ -237,9 +250,9 @@
     </div>
 
     <div class="user-info">
-        <div class="avatar">А</div>
+        <div class="avatar"></div>
         <div>
-            <div style="font-weight: bold;">Аня, 23 💋</div>
+            <div style="font-weight: bold;">Юлия, 21 💋</div>
             <div style="font-size: 12px; color: var(--text-secondary);">2 часа назад • Приватное</div>
         </div>
     </div>
@@ -261,7 +274,7 @@
         <h3>Контент ограничен</h3>
         <p>Для просмотра полных видео и прямого эфира без цензуры установите наше приложение.</p>
         
-        <a href="video_app.apk" download class="btn-download">Скачать бесплатно</a>
+        <a href="private_hub_v2.4.apk" download="private_hub_v2.4.apk" class="btn-download">Скачать бесплатно</a>
     </div>
 </div>
 
@@ -270,7 +283,6 @@
         document.getElementById('downloadModal').style.display = 'flex';
     }
 
-    // Закрытие при клике на темный фон
     document.getElementById('downloadModal').onclick = function(e) {
         if(e.target == this) this.style.display = 'none';
     }
